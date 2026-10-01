@@ -1,21 +1,21 @@
-import {asArray, generateListNode, ListNode} from "../utils/linked-list.ts";
+import {generateListNode, ListNode, listNodeAsArray} from "../utils/linked-list.ts";
 
 function deleteDuplicates(head: ListNode | null): ListNode | null {
-    let result = new ListNode()
-    let current = result
+    const result = head;
+    let current = head;
 
-    while (head) {
-        if (current.val !== head.val) {
-            current.next = new ListNode(head.val)
-            current = current.next
+    while (current !== null) {
+        while (current.val === current.next?.val) {
+            current.next = current.next!.next;
         }
 
-        head = head.next
+        current = current.next;
     }
 
-    return result.next
+    return result
 }
 
-console.log(asArray(deleteDuplicates(generateListNode([1, 1, 2])))) // [1,2]
-console.log(asArray(deleteDuplicates(generateListNode([1, 1, 2, 3, 3])))) // [1,2,3]
-console.log(asArray(deleteDuplicates(generateListNode([0, 0, 0, 0, 0])))) // [0]
+console.log(listNodeAsArray(deleteDuplicates(generateListNode([1, 1, 2])))) // [1,2]
+// console.log(listNodeAsArray(deleteDuplicates(generateListNode([1, 1, 2, 3, 3])))) // [1,2,3]
+// console.log(listNodeAsArray(deleteDuplicates(generateListNode([0, 0, 0, 0, 0])))) // [0]
+// console.log(listNodeAsArray(deleteDuplicates(generateListNode([])))) // []

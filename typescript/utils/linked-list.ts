@@ -25,7 +25,7 @@ export const generateListNode = (nums: number[]): ListNode | null => {
     return result.next;
 }
 
-export const asArray = (node: ListNode | null) => {
+export const listNodeAsArray = (node: ListNode | null) => {
     const result = []
     while (node) {
         result.push(node.val)
