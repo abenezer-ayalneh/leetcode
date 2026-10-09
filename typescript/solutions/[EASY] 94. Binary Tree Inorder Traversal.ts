@@ -41,17 +41,37 @@
 import {constructTree, TreeNode} from "../utils/tree.ts";
 
 function inorderTraversal(root: TreeNode | null): number[] {
+    if (root == null) {
+        return []
+    }
+    if (root.right == null && root.left == null) {
+        return [root.val]
+    }
+
     const result: number[] = [];
+    const parents: TreeNode[] = [];
+    let currentNode: TreeNode | null | undefined = root;
 
-    let parent: TreeNode | null = root;
-    let left: TreeNode | null = root?.left;
-    let right: TreeNode | null = root?.right;
-
+    while (currentNode) {
+        if (currentNode.left) {
+            const temp = currentNode
+            currentNode = currentNode.left
+            temp.left = null
+            parents.push(temp)
+        } else if (currentNode.right) {
+            result.push(currentNode.val)
+            currentNode = currentNode.right
+        } else {
+            result.push(currentNode.val)
+            currentNode = parents.pop()
+        }
+    }
 
     return result
 }
 
-console.log(inorderTraversal(constructTree([1, null, 2, 3]))) // [1,3,2]
 console.log(inorderTraversal(constructTree([1, 2, 3, 4, 5, null, 8, null, null, 6, 7, 9]))) // [4,2,6,5,7,1,3,9,8]
+console.log(inorderTraversal(constructTree([1, null, 2, 3]))) // [1,3,2]
 console.log(inorderTraversal(constructTree([]))) // []
 console.log(inorderTraversal(constructTree([1]))) // [1]
+console.log(inorderTraversal(constructTree([30, 9, -100, 100, 0, null, null, 50, 40]))) // [50, 100, 40, 9, 0, 30, -100]
